@@ -1,0 +1,35 @@
+@(users: List[models.User], activeSort: String)
+
+@main("Testing user accounts") {
+  <div class="row">
+    <div class="span12">
+      <h2>Available users</h2>
+<!--  <div id="sort">
+        <span>Sort by:</span>
+        <ul class="nav nav-pills">
+		  <li @if(activeSort == "Name"){class="active"}><a href="@routes.Application.index?sort=Name">Name</a></li>
+          <li @if(activeSort == "-Name"){class="active"}><a href="@routes.Application.index?sort=-Name">-Name</a></li>
+          <li @if(activeSort == "username"){class="active"}><a href="@routes.Application.index?sort=username">username</a></li>
+          <li @if(activeSort == "-username"){class="active"}><a href="@routes.Application.index?sort=-username">-username</a></li>
+          <li @if(activeSort == "creationDate"){class="active"}><a href="@routes.Application.index?sort=creationDate">creation</a></li>
+          <li @if(activeSort == "-creationDate"){class="active"}><a href="@routes.Application.index?sort=-creationDate">-creation</a></li>
+          <li @if(activeSort == "updateDate"){class="active"}><a href="@routes.Application.index?sort=updateDate">update</a></li>
+          <li @if(activeSort == "-updateDate"){class="active"}><a href="@routes.Application.index?sort=-updateDate">-update</a></li>
+          <li @if(activeSort == "none"){class="active"}><a href="@routes.Application.index">none</a></li>
+		</ul>
+      </div>
+-->   @if(users.isEmpty) {
+        <p>No users available yet.</p>
+      } else {
+      <ul>
+      @users.map { user =>
+        <li><a href="@routes.Users.showEditForm(user.id.get.stringify)">@user.Name</a> <em>by @user.username</em> (last modified : @user.updateDate.map(u => org.joda.time.format.DateTimeFormat.forPattern("MMM dd, yyyy").print(u)).orElse(Some("n/a"))) - <a href="@routes.Users.delete(user.id.get.stringify)" class="delete">delete</a></li>
+      }
+      </ul>
+      }
+      <div>
+        <a href="@routes.Users.showCreationForm">Create</a>
+      </div>
+    </div>
+  </div>
+}
